@@ -11,8 +11,15 @@ app.get('/', function(req,res){
 })
 
 app.get('/json', function(req,res){
-  var jsonObj = {"message": "Hello json"}
+  var response = ''
+  if (process.env.MESSAGE_STYLE === "uppercase") {
+     response = "Hello Json".toUpperCase();
+  } else {
+  response = "Hello json";
+   }
+  var jsonObj = {"message": response}
   res.json(jsonObj)
+  
 })
 
 // --> 7)  Mount the Logger middleware here
