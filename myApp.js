@@ -9,7 +9,34 @@ const absolutePath = __dirname + '/views/index.html'
 app.get('/', function(req,res){
   res.sendFile(absolutePath)
 })
-
+app.use(function middleware(req, res, next) {
+  var str = req.method + " " + req.path + " - " + req.ip;
+  console.log(str)
+  next();
+});
+app.route('/name')
+     .get((req,res)=>{
+  var firstname = req.query.first
+  var lastname = req.query.last
+  res.json({ name: firstname+' '+lastname})
+})
+app.get('/:word/echo',(req,res)=>{
+  
+  res.json({echo:req.params.word})
+  
+})
+app.get(
+  "/now",
+  (req, res, next) => {
+    req.time = new Date().toString();
+    next();
+  },
+  (req, res) => {
+    res.send({
+      time: req.time
+    });
+  }
+);
 app.get('/json', function(req,res){
   var response = ''
   if (process.env.MESSAGE_STYLE === "uppercase") {
