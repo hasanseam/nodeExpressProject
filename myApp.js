@@ -1,4 +1,4 @@
-
+var bodyParser = require('body-parser')
 var express = require('express');
 var app = express();
 
@@ -11,6 +11,7 @@ app.get('/', function(req,res){
 })
 app.use(function middleware(req, res, next) {
   var str = req.method + " " + req.path + " - " + req.ip;
+  bodyParser.urlencoded({extended: false});
   console.log(str)
   next();
 });
